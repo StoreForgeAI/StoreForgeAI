@@ -1,0 +1,137 @@
+  "name": "StoreProject",
+  "type": "object",
+  "properties": {
+    "store_name": {
+      "type": "string",
+      "description": "Name of the store"
+    },
+    "store_description": {
+      "type": "string",
+      "description": "Description of what the store should be about"
+    },
+    "target_audience": {
+      "type": "string",
+      "description": "Target customer demographics"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Store niche/category"
+    },
+    "generated_concept": {
+      "type": "object",
+      "description": "AI generated store concept",
+      "properties": {
+        "brand_identity": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "tagline": {
+              "type": "string"
+            },
+            "brand_voice": {
+              "type": "string"
+            },
+            "color_scheme": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "typography": {
+              "type": "string"
+            }
+          }
+        },
+        "product_strategy": {
+          "type": "object",
+          "properties": {
+            "main_categories": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recommended_products": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "pricing_strategy": {
+              "type": "string"
+            }
+          }
+        },
+        "marketing_plan": {
+          "type": "object",
+          "properties": {
+            "content_strategy": {
+              "type": "string"
+            },
+            "social_media": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "launch_strategy": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "concept",
+        "generated",
+        "designing",
+        "ready"
+      ],
+      "default": "concept"
+    },
+    "business_plan": {
+      "type": "object",
+      "description": "Generated business plan and financials"
+    },
+    "design_mockups": {
+      "type": "array",
+      "description": "Generated store design mockups",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "store_description"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "write": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
